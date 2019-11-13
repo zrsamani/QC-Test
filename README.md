@@ -2,7 +2,7 @@
 # Zahra Riahi Samani
 # Center for Biomedical Image Computing and Analytics: CBICA
 # University of Pennsylvania
-# January 2019
+# November 2019
 
 This directory includes:
 QCTest.py It loads the pre-trained models and run in on the sample of test data
