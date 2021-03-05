@@ -14,8 +14,16 @@ from sklearn.metrics import classification_report
 from keras.models import load_model
 import os
 import argparse
+def createModel():
+    model = keras.models.Sequential()
+    model.add(keras.layers.Dense(256, activation='relu', input_dim=l1* l2 * l3))
+    model.add(keras.layers.Dropout(0.5))
+    model.add(keras.layers.Dense(2, activation='softmax'))
+    return model
 
-
+model.compile(optimizer=keras.optimizers.RMSprop(lr=2e-4),
+              loss='binary_crossentropy',
+              metrics=['acc'])
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--axial', action='store_true')
@@ -107,14 +115,7 @@ i = 0
 file_name=train_generator.filenames
 
 
-model = keras.models.Sequential()
-model.add(keras.layers.Dense(256, activation='relu', input_dim=l1* l2 * l3))
-model.add(keras.layers.Dropout(0.5))
-model.add(keras.layers.Dense(2, activation='softmax'))
 
-model.compile(optimizer=keras.optimizers.RMSprop(lr=2e-4),
-              loss='binary_crossentropy',
-              metrics=['acc'])
 kf = sklearn.cross_validation.KFold(np.shape(train_features)[0], n_folds=5, shuffle=True, random_state=100)
 
 for inputs_batch, labels_batch in train_generator:
@@ -140,6 +141,7 @@ outfile_acc=Res_dir+TrasN+'ValDetailedRes-'+'.txt'
 ff=open(outfile_acc,"w")
 i=0;
 for train, test in kf:
+    model=createModel()
     X_train, X_test, y_train, y_test =train_features[train], train_features[test], train_labels[train], train_labels[test]
     history = model.fit(X_train,
                    y_train,
